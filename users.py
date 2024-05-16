@@ -6,6 +6,7 @@ c = conn.cursor()
 sql_query = """CREATE TABLE users(
                 userID integer PRIMARY KEY,
                 username text,
-                user_password text
+                user_role text,
+                email text
                 )"""
 c.exucute(sql_query)
