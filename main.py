@@ -14,5 +14,15 @@ def db_connect():
     return conn
 
 
+@app.route('/')
+def view_movies():
+    conn = db_connect()
+    c = conn.cursor()
+    sql_query = "SELECT * FROM movies"
+    c.execute(sql_query)
+    movies = c.fetchall()
+    return render_template('index.html', movie_data=movies)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
