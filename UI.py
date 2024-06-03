@@ -7,11 +7,13 @@ def open_help():
     help_label = tk.Label(help_window, text="This is a simple homepage created using Tkinter.")
     help_label.pack(padx=20, pady=20)
 
+
 def open_faq():
     faq_window = tk.Toplevel(root)
     faq_window.title("FAQ")
     faq_label = tk.Label(faq_window, text="This is a simple homepage created using Tkinter.")
     faq_label.pack(padx=20, pady=20)
+
 
 def open_about():
     about_window = tk.Toplevel(root)
@@ -19,11 +21,13 @@ def open_about():
     about_label = tk.Label(about_window, text="This is a simple homepage created using Tkinter.")
     about_label.pack(padx=20, pady=20)
 
+
 def open_terms():
     terms_window = tk.Toplevel(root)
     terms_window.title("Terms")
     terms_label = tk.Label(terms_window, text="This is a simple homepage created using Tkinter.")
     terms_label.pack(padx=20, pady=20)
+
 
 def open_settings():
     settings_window = tk.Toplevel(root)
