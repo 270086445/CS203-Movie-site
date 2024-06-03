@@ -13,25 +13,14 @@ def db_connect():
     return conn
 
 
-@app.route('/movies', methods=["GET"])
+@app.route('/')
 def view_movies():
     conn = db_connect()
     c = conn.cursor()
     sql_query = "SELECT * FROM movies"
     c.execute(sql_query)
     movies = c.fetchall()
-    return render_template("index.html", movies_data=movies)
-
-
-@app.route('/add_movie', metohds=["POST", "GET"])
-def handle_movies():
-    if request.method == "GET":
-        return render_template("add_movie.html")
-    elif request.method == "POST":
-        conn = db_connect()
-        c = conn.cursor()
-        conn.commit()
-        return "Data Saved"
+    return render_template('index.html', movie_data=movies)
 
 
 if __name__ == '__main__':
