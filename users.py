@@ -9,4 +9,4 @@ sql_query = """CREATE TABLE users(
                 user_role text,
                 email text
                 )"""
-c.exucute(sql_query)
+c.execute(sql_query)

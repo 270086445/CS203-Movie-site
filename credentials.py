@@ -8,4 +8,4 @@ sql_query = """CREATE TABLE credentials(
                 userID integer,
                 password text
                 )"""
-c.exucute(sql_query)
+c.execute(sql_query)

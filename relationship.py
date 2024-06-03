@@ -7,4 +7,4 @@ sql_query = """CREATE TABLE relationship between admins users and movies (
                 userID integer PRIMARY KEY,
                 roleID integer
                 )"""
-c.exucute(sql_query)
+c.execute(sql_query)

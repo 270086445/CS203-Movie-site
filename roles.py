@@ -7,4 +7,4 @@ sql_query = """CREATE TABLE roles(
                 roleID integer PRIMARY KEY,
                 role_name text
                 )"""
-c.exucute(sql_query)
+c.execute(sql_query)
