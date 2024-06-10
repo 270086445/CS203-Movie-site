@@ -16,7 +16,12 @@ def db_connect():
 @app.route('/movies', methods=['POST', 'GET'])
 def view_movies():
     if request.method == 'GET':
-        return render_template('index.html')
+        conn = db_connect()
+        c = conn.cursor()
+        sql_query = "SELECT * FROM movies"
+        c.execute(sql_query)
+        movies = c.fetchall()
+        return render_template('index.html', movies_data = movies)
     elif request.method == 'POST':
         conn = db_connect()
         c = conn.cursor()
