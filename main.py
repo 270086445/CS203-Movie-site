@@ -13,27 +13,24 @@ def db_connect():
     return conn
 
 
-@app.route('/movies', methods=['POST', 'GET'])
+@app.route('/movies')
 def view_movies():
-    if request.method == 'GET':
-        conn = db_connect()
-        c = conn.cursor()
-        sql_query = "SELECT * FROM movies"
-        c.execute(sql_query)
-        movies = c.fetchall()
-        return render_template('index.html', movies_data=movies)
-    elif request.method == 'POST':
-        conn = db_connect()
-        c = conn.cursor()
-        title = request.form['title']
-        year = request.form['year']
-        genre = request.form['genre']
-        director = request.form['director']
-        rating = request.form['rating']
-        sql_query = "INSERT INTO movies (title, year, genre, director, rating) VALUES (?,?,?,?,?)"
-        c.execute(sql_query, (title, year, genre, director, rating))
-        conn.commit()
-        return render_template("showcase.html")
+    conn = db_connect()
+    c = conn.cursor()
+    sql_query = "SELECT * FROM movies"
+    c.execute(sql_query)
+    movies = c.fetchall()
+    return render_template('index.html', movies_data=movies)
+
+
+@app.route('/display')
+def show_movies():
+    conn = db_connect()
+    c = conn.cursor()
+    sql_query = "SELECT * FROM movies"
+    c.execute(sql_query)
+    info = c.fetchall()
+    return render_template('showcase.html', movies_data=info)
 
 
 if __name__ == '__main__':
