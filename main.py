@@ -21,7 +21,7 @@ def view_movies():
         sql_query = "SELECT * FROM movies"
         c.execute(sql_query)
         movies = c.fetchall()
-        return render_template('index.html', movies_data = movies)
+        return render_template('index.html', movies_data=movies)
     elif request.method == 'POST':
         conn = db_connect()
         c = conn.cursor()
@@ -33,7 +33,7 @@ def view_movies():
         sql_query = "INSERT INTO movies (title, year, genre, director, rating) VALUES (?,?,?,?,?)"
         c.execute(sql_query, (title, year, genre, director, rating))
         conn.commit()
-        return "Added movie!"
+        return render_template("showcase.html")
 
 
 if __name__ == '__main__':
