@@ -1,10 +1,6 @@
 import sqlite3
-<<<<<<< HEAD
-from flask import Flask, request
+from flask import Flask, render_template, request
 
-=======
-from flask import Flask, render_template
->>>>>>> f69eb611c2cfa924eb18403608e7a36d07237bdf
 
 app = Flask(__name__)
 
@@ -18,7 +14,6 @@ def db_connect():
     return conn
 
 
-<<<<<<< HEAD
 @app.route('/add', methods=['POST', 'GET'])
 def add_movies():
     if request.method == 'GET':
@@ -35,7 +30,8 @@ def add_movies():
         c.execute(sql_query, (title, year, genre, director, rating))
         conn.commit()
         return "Added movie!"
-=======
+
+
 def load_movies():
     conn = db_connect()
     c = conn.cursor()
@@ -55,7 +51,6 @@ def show_movies(c):
     load_movies()
     info = c.fetchall()
     return render_template('showcase.html', movies_data=info)
->>>>>>> f69eb611c2cfa924eb18403608e7a36d07237bdf
 
 
 if __name__ == '__main__':
