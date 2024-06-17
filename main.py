@@ -13,22 +13,23 @@ def db_connect():
     return conn
 
 
-@app.route('/movies')
-def view_movies():
+def load_movies():
     conn = db_connect()
     c = conn.cursor()
     sql_query = "SELECT * FROM movies"
     c.execute(sql_query)
+
+
+@app.route('/movies')
+def view_movies(c):
+    load_movies()
     movies = c.fetchall()
     return render_template('index.html', movies_data=movies)
 
 
 @app.route('/display')
-def show_movies():
-    conn = db_connect()
-    c = conn.cursor()
-    sql_query = "SELECT * FROM movies"
-    c.execute(sql_query)
+def show_movies(c):
+    load_movies()
     info = c.fetchall()
     return render_template('showcase.html', movies_data=info)
 
