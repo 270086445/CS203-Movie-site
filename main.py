@@ -1,5 +1,6 @@
 import sqlite3
-from flask import Flask, render_template, request
+from flask import Flask, request
+
 
 app = Flask(__name__)
 
@@ -13,10 +14,10 @@ def db_connect():
     return conn
 
 
-@app.route('/movies', methods=['POST', 'GET'])
-def view_movies():
+@app.route('/add', methods=['POST', 'GET'])
+def add_movies():
     if request.method == 'GET':
-        return render_template('index.html')
+        return 'movies'
     elif request.method == 'POST':
         conn = db_connect()
         c = conn.cursor()
