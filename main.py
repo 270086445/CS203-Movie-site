@@ -39,14 +39,14 @@ def load_movies():
     c.execute(sql_query)
 
 
-@app.route('/movies')
+@app.route('/movies', methods=['GET'])
 def view_movies(c):
     load_movies()
     movies = c.fetchall()
     return render_template('index.html', movies_data=movies)
 
 
-@app.route('/display')
+@app.route('/display', methods=['GET'])
 def show_movies(c):
     load_movies()
     info = c.fetchall()
