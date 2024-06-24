@@ -26,6 +26,20 @@ class Movie(db.Model):
         self.rating = rating
 
 
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String)
+    password = db.Column(db.String)
+    email = db.Column(db.String)
+    role_id = db.Column(db.Integer, db.ForeignKey('role.id'))
+
+
+class Role(db.Model):
+    id = db.Column(db.Interger, primary_key=True)
+    name = db.Column(db.String)
+    users = db.relationship('User', backref='role')
+
+
 def db_connect():
     conn = None
     try:
