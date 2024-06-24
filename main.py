@@ -14,8 +14,16 @@ class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
     director = db.Column(db.String)
+    genre = db.Column(db.String)
     year = db.Column(db.Integer)
     rating = db.Column(db.String)
+
+    def __init__(self, title, director, genre, year, rating):
+        self.title = title
+        self.director = director
+        self.genre = genre
+        self.year = year
+        self.rating = rating
 
 
 def db_connect():
