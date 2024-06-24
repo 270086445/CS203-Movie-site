@@ -40,7 +40,7 @@ class User(db.Model):
 
 
 class Role(db.Model):
-    id = db.Column(db.Interger, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
@@ -49,7 +49,7 @@ class Role(db.Model):
         self.user_id = user_id
 
 
-@app.route('/get-movies', methofs=['GET'])
+@app.route('/get-movies', methods=['GET'])
 def get_movies():
     movies = Movie.query.all()
     output = []
@@ -82,4 +82,6 @@ def get_users_by_role(role_id):
 
 
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)
