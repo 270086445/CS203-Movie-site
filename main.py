@@ -71,11 +71,11 @@ def get_users_by_role(role_id):
     if not role:
         return jsonify({'message': 'Role not found'}), 404
 
-    users = Role.query.filter_by(role_id=role_id)
+    users = Role.query.filter_by(id=role_id)
     output = []
 
     for user in users:
-        user_data = {'username': user.username, 'role': user.role_id}
+        user_data = {'username': user.user_id, 'role': user.role_id}
         output.append(user_data)
 
     return jsonify({'users': output}), 200
