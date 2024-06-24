@@ -4,6 +4,9 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
+class Movie():
+    id = db.Colmn(db.Integer,)
+
 
 def db_connect():
     conn = None
@@ -40,9 +43,9 @@ def load_movies():
 
 
 @app.route('/movies', methods=['GET'])
-def view_movies(c):
+def view_movies():
     load_movies()
-    movies = c.fetchall()
+    movies = Movie.query.all()
     return render_template('index.html', movies_data=movies)
 
 
