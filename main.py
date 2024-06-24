@@ -1,11 +1,14 @@
 import sqlite3
 from flask import Flask, render_template, request
+from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
+db =
 
-class Movie():
-    id = db.Colmn(db.Integer,)
+
+class Movie(db.Model):
+    id = db.Column(db.Integer,)
 
 
 def db_connect():
