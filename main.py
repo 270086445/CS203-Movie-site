@@ -1,5 +1,4 @@
-import sqlite3
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -31,61 +30,55 @@ class User(db.Model):
     username = db.Column(db.String)
     password = db.Column(db.String)
     email = db.Column(db.String)
-    role_id = db.Column(db.Integer, db.ForeignKey('role.id'))
+    role_id = db.relationship('Role', backref='user')
+
+    def __init__(self, username, password, email, role_id):
+        self.username = username
+        self.password = password
+        self.email = email
+        self.role_id = role_id
 
 
 class Role(db.Model):
     id = db.Column(db.Interger, primary_key=True)
     name = db.Column(db.String)
-    users = db.relationship('User', backref='role')
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __init__(self, name, user_id):
+        self.name = name
+        self.user_id = user_id
 
 
-def db_connect():
-    conn = None
-    try:
-        conn = sqlite3.connect("admin.sqlite")
-    except sqlite3.Error as e:
-        print(e)
-    return conn
-
-
-@app.route('/add', methods=['POST', 'GET'])
-def add_movies():
-    if request.method == 'GET':
-        return 'movies'
-    elif request.method == 'POST':
-        conn = db_connect()
-        c = conn.cursor()
-        title = request.form['title']
-        year = request.form['year']
-        genre = request.form['genre']
-        director = request.form['director']
-        rating = request.form['rating']
-        sql_query = "INSERT INTO movies (title, year, genre, director, rating) VALUES (?,?,?,?,?)"
-        c.execute(sql_query, (title, year, genre, director, rating))
-        conn.commit()
-        return "Added movie!"
-
-
-def load_movies():
-    conn = db_connect()
-    c = conn.cursor()
-    sql_query = "SELECT * FROM movies"
-    c.execute(sql_query)
-
-
-@app.route('/movies', methods=['GET'])
-def view_movies():
-    load_movies()
+@app.route('/get-movies', methofs=['GET'])
+def get_movies():
     movies = Movie.query.all()
-    return render_template('index.html', movies_data=movies)
+    output = []
+
+    for movie in movies:
+        movie_data = {'title': movie.title,
+                      'director': movie.director,
+                      'genre': movie.genre,
+                      'year': movie.year,
+                      'rating': movie.rating}
+        output.append(movie_data)
+
+    return jsonify({'movies': output}), 200
 
 
-@app.route('/display', methods=['GET'])
-def show_movies(c):
-    load_movies()
-    info = c.fetchall()
-    return render_template('showcase.html', movies_data=info)
+@app.route('/get-users-by-role/<role_id>', methods=['GET'])
+def get_users_by_role(role_id):
+    role = Role.query.get(role_id)
+    if not role:
+        return jsonify({'message': 'Role not found'}), 404
+
+    users = Role.query.filter_by(role_id=role_id)
+    output = []
+
+    for user in users:
+        user_data = {'username': user.username, 'role': user.role_id}
+        output.append(user_data)
+
+    return jsonify({'users': output}), 200
 
 
 if __name__ == '__main__':
